@@ -1,0 +1,12 @@
+# PDF text extraction with page numbers
+pymupdf>=1.24
+# Local persistent vector store, no server needed
+chromadb>=0.5
+# Official Ollama Python client (chat + embeddings)
+ollama>=0.4
+# CLI framework, small and type-hint based
+typer>=0.12
+# config.yaml and data/sources.yaml
+pyyaml>=6.0
+# Unit tests
+pytest>=8.0

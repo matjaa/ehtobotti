@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+
+# Source PDFs are not redistributed; the index is rebuilt locally
+data/raw/
+data/index/
+
+# Editors / OS
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store

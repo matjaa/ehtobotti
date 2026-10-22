@@ -1,0 +1,11 @@
+# Public source documents. PDFs are downloaded manually into data/raw/<product>/
+# and are not committed. One entry per PDF; `file` is the filename inside that folder.
+#
+# Example:
+# - product: koti
+#   file: kotivakuutusehdot.pdf
+#   title: Kotivakuutusehdot
+#   version: "1.1.2026"
+#   url: https://example.com/kotivakuutusehdot.pdf
+
+[]

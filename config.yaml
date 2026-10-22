@@ -1,0 +1,52 @@
+# Ehtobotti settings. Model names live here only, never in code.
+
+provider: ollama            # ollama | azure_openai (stub, phase 3)
+
+ollama:
+  host: http://localhost:11434
+
+models:
+  default_chat: qwen3.5:4b
+  embedding: bge-m3
+  # Per-model options. think_supported controls whether think=False is passed
+  # (Qwen supports thinking, Gemma does not and errors if the flag is sent).
+  chat:
+    qwen3.5:4b:
+      think_supported: true
+    gemma3:4b:
+      think_supported: false
+    qwen3:8b:
+      think_supported: true
+
+generation:
+  num_ctx: 4096
+  temperature: 0.1
+
+chunking:
+  max_tokens: 400
+  # No tokenizer dependency: token count is estimated from characters.
+  # bge-m3 averages roughly 4 characters per token on Finnish legal text.
+  chars_per_token: 4
+  # Headings longer than this are treated as body text (numbered list items etc.).
+  max_heading_chars: 90
+
+retrieval:
+  top_k: 5
+
+embedding:
+  batch_size: 32
+
+paths:
+  raw_dir: data/raw
+  index_dir: data/index
+  sources: data/sources.yaml
+
+index:
+  collection: vakuutusehdot
+
+# Product keys used as folder names under data/raw/ and as the --product filter.
+products:
+  koti: Kotivakuutus
+  auto: Autovakuutus
+  matka: Matkavakuutus
+  henkilo: Henkilö- ja tapaturmavakuutus
