@@ -1,0 +1,40 @@
+﻿id,product,answerable,verified,expected_sections,expected_sources,retrieved_sections,hit,cited_sections,citation_precision,citation_hit,unsupported_citations,refused,refusal_correct,structured,judge_verdict,judge_score,latency_s,question,answer
+auto-01,auto,True,True,3.2,,3.2;3.17;s. 1;3.6;3.20.1,True,3.2,1.0,True,0,False,True,True,OIKEIN,1.0,16.91,"Korvataanko eläintörmäysturvasta vahinko, joka syntyy kun väistän eläintä?","Ei. Vakuutuksesta ei korvata vahinkoa, joka on aiheutunut eläimen väistämisestä [Autovakuutus, kohta 3.2, s. 3].
+
+Tämä ei ole virallinen korvauspäätös."
+auto-02,auto,True,True,1,"Autovakuutus IPID, s. 2",s. 2;2;s. 2;1;s. 1,True,Autovakuutus IPID s. 2,1.0,True,0,False,True,True,OIKEIN,1.0,3.72,Onko vapaaehtoinen ajoneuvovakuutus voimassa Turkissa?,"Ei. Vapaaehtoisen vakuutuksen voimassaoloalueessa ei ole mainittu Turkki [Autovakuutus IPID, s. 2].
+
+Tämä ei ole virallinen korvauspäätös."
+auto-03,auto,True,True,3.9,,3.9;3.16.3;4.6.4;s. 2;3.22,True,3.9,1.0,True,0,False,True,True,OIKEIN,1.0,3.50,"Paljonko lasiturvan omavastuu on, jos tuulilasin vaihtaa muu kuin LähiTapiolan kumppanikorjaamo?","Omavastuu on 300 euroa [Autovakuutus, kohta 3.9, s. 5].
+
+Tämä ei ole virallinen korvauspäätös."
+auto-04,auto,True,True,3.7,,3.7;3.20.1;3.4;3.20.2;3.20.1,True,3.7,1.0,True,0,False,True,True,OIKEIN,1.0,4.24,"Korvataanko pysäköidyn auton kolhu, jos joku ajaa siihen ja lähtee paikalta tuntemattomana?","Kyllä, jos vahinko on aiheutettu toisella moottoriajoneuvolla ja vahingon aiheuttaja ei ole tiedossa [Autovakuutus, kohta 3.7, s. 4].
+
+Tämä ei ole virallinen korvauspäätös."
+auto-05,auto,True,True,3.11,,3.11;3.11;3.4;3.17;3.1,True,3.11,1.0,True,0,False,True,True,OIKEIN,1.0,4.01,Korvaako moottorin rikkoutuminen -turva latausgeneraattorin rikkoutumisen?,"Ei. Latausgeneraattori ei kuulu perusmoottoriin, joten sen rikkoutuminen ei korvata [Autovakuutus, kohta 3.11, s. 5].
+
+Tämä ei ole virallinen korvauspäätös."
+auto-06,auto,True,True,3.13,,3.13;s. 1;3.19.4;3.12;3.22,True,3.13,1.0,True,0,False,True,True,OIKEIN,1.0,3.58,Kuinka paljon ryöstöturva korvaa kuljettajan irtainta omaisuutta enintään?,"Ryöstöturva korvaa enintään 2000 euroa [Autovakuutus, kohta 3.13, s. 6].
+
+Tämä ei ole virallinen korvauspäätös."
+auto-07,auto,True,True,4.8.4,,4.8.4;4.8.3;3.4;4.8.3;3.4,True,4.8.4,1.0,True,0,False,True,True,OIKEIN,1.0,4.27,"Saako auton avaimia säilyttää autossa, jos ovet on lukittu ja ikkunat suljettu?","Ei. Avaimia tai ajoneuvon lukitukseen tarkoitettua laitetta ei saa säilyttää ajoneuvossa, vaikka ovet ja ikkunat ovatkin lukittu [Autovakuutus, kohta 4.8.4, s. 22].
+
+Tämä ei ole virallinen korvauspäätös."
+auto-08,auto,True,True,4.6.4,,4.6.4;4.6.4;3.4;3.4;2.2,True,4.6.4.1,1.0,True,0,False,True,True,OIKEIN,1.0,3.56,"Mikä omavastuu peritään, jos auto varastetaan Puolassa?","Omavastuu on 20 % vahingon määrästä [Autovakuutus, kohta 4.6.4.1, s. 20].
+
+Tämä ei ole virallinen korvauspäätös."
+auto-09,auto,True,True,8.9,,8.9;8.4;8.4;8.7;8.8,True,8.9,1.0,True,0,False,True,True,OIKEIN,1.0,5.65,Milloin henkilökohtainen bonusturva tulee voimaan?,"Henkilökohtainen bonusturva tulee voimaan vakuutuksen alkaessa tai voimassaolevassa vakuutuksessa, kun liikennevakuutuksen bonus on 80 prosenttia ja vakuutus- ja vahinkohistoriatiedoissa ei ole vahinkoja tai viimeisimmän vahingon korvauspäivästä on vähintään kaksi vuotta [Autovakuutus, kohta 8.9, s. 27].
+
+Tämä ei ole virallinen korvauspäätös."
+auto-10,auto,True,True,3.16.3,,3.16.3;3.16.5;3.16.5;3.20.2;3.16.6,True,3.16.3,1.0,True,0,False,True,True,OIKEIN,1.0,4.27,"Korvataanko hinauskulut, jos henkilöautosta loppuu polttoaine kesken matkan Suomessa?","Kyllä, vakuutuksesta korvataan polttoaineen loppumisesta aiheutuneet kustannukset [Autovakuutus, kohta 3.16.3, s. 6].
+
+Tämä ei ole virallinen korvauspäätös."
+auto-11,auto,True,True,10.1,"Autovakuutus IPID, s. 2",s. 2;10.1;3.4;10.2;3.4,True,3.4,0.0,False,0,False,True,True,OSITTAIN,0.5,4.95,"Voinko irtisanoa liikennevakuutuksen, jos autoni varastetaan?","Ei. Jos ajoneuvon varastaminen on tehty avaimia käyttäen, suoritetaan korvaus turvasta vain, jos teon tekijä on saanut vakuutuksen kohteen tai sen säilytyssuojan avaimet haltuunsa murron yhteydessä tapahtuneella varkaudella [Autovakuutus, kohta 3.4, s. 3].
+
+Tämä ei ole virallinen korvauspäätös."
+auto-12,auto,True,True,3.9,"Autovakuutus IPID, s. 1",3.9;s. 1;3;s. 1;2,True,3.9,1.0,True,0,False,True,True,OSITTAIN,0.5,4.74,Korvataanko tuulilasin rikkoutuminen liikennevakuutuksesta?,"Kyllä, jos lasi rikkoutuu ikkunalasiin suoraan ulkoapäin osuneesta iskusta [Autovakuutus, kohta 3.9, s. 5].
+
+Tämä ei ole virallinen korvauspäätös."
+auto-u01,auto,False,True,,,3.8.1;7.1;s. 1;3.19.4;8.4,,,,,0,True,True,True,,,12.66,Paljonko ajoneuvovakuutus maksaa vuodessa uudelle henkilöautolle?,En löytänyt vastausta vakuutusehdoista. Tämä ei ole virallinen korvauspäätös.
+auto-u02,auto,False,True,,,s. 2;7;5;7.2;13,,,,,0,True,True,True,,,9.26,Voiko vakuutusmaksun maksaa MobilePaylla?,En löytänyt vastausta vakuutusehdoista. Tämä ei ole virallinen korvauspäätös.
+auto-u03,auto,False,True,,,3.9;3.24.3;3.20.2;3.14;3.20.1,,,,,0,True,True,True,,,10.56,Kuinka kauan tuulilasin vaihto kumppanikorjaamolla keskimäärin kestää?,En löytänyt vastausta vakuutusehdoista. Tämä ei ole virallinen korvauspäätös.

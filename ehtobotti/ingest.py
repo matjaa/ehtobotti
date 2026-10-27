@@ -9,8 +9,9 @@ from typing import Callable
 
 import yaml
 
-from ehtobotti.chunking import Chunk, PageText, chunk_document
+from ehtobotti.chunking import Chunk, chunk_document
 from ehtobotti.config import Settings
+from ehtobotti.pdftext import read_pdf
 
 
 @dataclass(frozen=True)
@@ -20,6 +21,7 @@ class SourceInfo:
     title: str
     version: str
     url: str = ""
+    label: str = ""
 
 
 def load_sources(path: Path) -> dict[tuple[str, str], SourceInfo]:
@@ -35,16 +37,10 @@ def load_sources(path: Path) -> dict[tuple[str, str], SourceInfo]:
             title=e.get("title", Path(e["file"]).stem),
             version=str(e.get("version", "")),
             url=e.get("url", ""),
+            label=e.get("label", ""),
         )
         for e in entries
     }
-
-
-def read_pdf(path: Path) -> list[PageText]:
-    import pymupdf
-
-    with pymupdf.open(path) as doc:
-        return [PageText(page=i + 1, text=page.get_text("text")) for i, page in enumerate(doc)]
 
 
 def _doc_id(product: str, pdf: Path) -> str:
@@ -81,6 +77,7 @@ def build_chunks(
             doc_id=_doc_id(key, pdf),
             max_chars=settings.chunking.max_chars,
             max_heading_chars=settings.chunking.max_heading_chars,
+            label=info.label if info else "",
         )
         log(f"{key}/{pdf.name}: {len(doc_chunks)} palaa")
         chunks.extend(doc_chunks)

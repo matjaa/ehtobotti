@@ -1,0 +1,152 @@
+[
+  {
+    "id": "auto-01",
+    "product": "auto",
+    "question": "Korvataanko eläintörmäysturvasta vahinko, joka syntyy kun väistän eläintä?",
+    "expected_answer": "Ei. Eläintörmäysturvasta korvataan eläimeen osumisesta aiheutunut esinevahinko, mutta eläimen väistämisestä aiheutunutta vahinkoa ei korvata.",
+    "expected_sections": ["3.2"],
+    "answerable": true,
+    "expected_part": "Vapaaehtoisen vakuutuksen ehdot",
+    "verified": true
+  },
+  {
+    "id": "auto-02",
+    "product": "auto",
+    "question": "Onko vapaaehtoinen ajoneuvovakuutus voimassa Turkissa?",
+    "expected_answer": "Ei, ellei vakuutuskirjassa tai vakuutusturvan kohdalla ole toisin mainittu. Turkki on rajattu voimassaoloalueen ulkopuolelle.",
+    "expected_sections": ["1"],
+    "answerable": true,
+    "expected_part": "Vapaaehtoisen vakuutuksen ehdot",
+    "verified": true,
+    "expected_sources": ["Autovakuutus IPID, s. 2"]
+  },
+  {
+    "id": "auto-03",
+    "product": "auto",
+    "question": "Paljonko lasiturvan omavastuu on, jos tuulilasin vaihtaa muu kuin LähiTapiolan kumppanikorjaamo?",
+    "expected_answer": "Korvauksesta vähennetään 300 euron omavastuu, kuitenkin vähintään vakuutuskirjaan merkitty omavastuu.",
+    "expected_sections": ["3.9"],
+    "answerable": true,
+    "expected_part": "Vapaaehtoisen vakuutuksen ehdot",
+    "verified": true
+  },
+  {
+    "id": "auto-04",
+    "product": "auto",
+    "question": "Korvataanko pysäköidyn auton kolhu, jos joku ajaa siihen ja lähtee paikalta tuntemattomana?",
+    "expected_answer": "Kyllä, pysäköintiturvasta, kun vahinko on aiheutettu toisella moottoriajoneuvolla ja aiheuttaja ei ole tiedossa. Hakijan on voitava luotettavasti selvittää tapahtuma-aika ja -paikka.",
+    "expected_sections": ["3.7"],
+    "answerable": true,
+    "expected_part": "Vapaaehtoisen vakuutuksen ehdot",
+    "verified": true
+  },
+  {
+    "id": "auto-05",
+    "product": "auto",
+    "question": "Korvaako moottorin rikkoutuminen -turva latausgeneraattorin rikkoutumisen?",
+    "expected_answer": "Ei. Latausgeneraattori ei kuulu perusmoottoriin, joten sen rikkoutumista ei korvata tästä turvasta.",
+    "expected_sections": ["3.11"],
+    "answerable": true,
+    "expected_part": "Vapaaehtoisen vakuutuksen ehdot",
+    "verified": true
+  },
+  {
+    "id": "auto-06",
+    "product": "auto",
+    "question": "Kuinka paljon ryöstöturva korvaa kuljettajan irtainta omaisuutta enintään?",
+    "expected_answer": "Irtain omaisuus on vakuutuksen kohteena 2000 euroon saakka.",
+    "expected_sections": ["3.13"],
+    "answerable": true,
+    "expected_part": "Vapaaehtoisen vakuutuksen ehdot",
+    "verified": true
+  },
+  {
+    "id": "auto-07",
+    "product": "auto",
+    "question": "Saako auton avaimia säilyttää autossa, jos ovet on lukittu ja ikkunat suljettu?",
+    "expected_answer": "Ei. Avaimia ei saa säilyttää ajoneuvossa, vaikka kaikki ovet ja tavaratila olisi lukittu ja ikkunat suljettu.",
+    "expected_sections": ["4.8.4"],
+    "answerable": true,
+    "expected_part": "Vapaaehtoisen vakuutuksen ehdot",
+    "verified": true
+  },
+  {
+    "id": "auto-08",
+    "product": "auto",
+    "question": "Mikä omavastuu peritään, jos auto varastetaan Puolassa?",
+    "expected_answer": "Varkausvahingosta vähennetään 20 %:n omavastuu vahingon määrästä, kuitenkin vähintään vakuutuskirjaan merkitty euromääräinen omavastuu.",
+    "expected_sections": ["4.6.4"],
+    "answerable": true,
+    "expected_part": "Vapaaehtoisen vakuutuksen ehdot",
+    "verified": true
+  },
+  {
+    "id": "auto-09",
+    "product": "auto",
+    "question": "Milloin henkilökohtainen bonusturva tulee voimaan?",
+    "expected_answer": "Kun liikennevakuutuksen bonus on 80 prosenttia ja vakuutus- ja vahinkohistoriassa ei ole vahinkoja tai viimeisimmän vahingon korvauspäivästä on vähintään kaksi vuotta.",
+    "expected_sections": ["8.9"],
+    "answerable": true,
+    "expected_part": "Liikennevakuutusehdot",
+    "verified": true
+  },
+  {
+    "id": "auto-10",
+    "product": "auto",
+    "question": "Korvataanko hinauskulut, jos henkilöautosta loppuu polttoaine kesken matkan Suomessa?",
+    "expected_answer": "Kyllä. Yksityiskäyttöisen henkilöauton polttoaineen loppuminen Suomessa on hinaus- ja matkakuluturvan vakuutustapahtuma, josta korvataan matkan keskeytymisen kohtuulliset kustannukset.",
+    "expected_sections": ["3.16.3"],
+    "answerable": true,
+    "expected_part": "Vapaaehtoisen vakuutuksen ehdot",
+    "verified": true
+  },
+  {
+    "id": "auto-11",
+    "product": "auto",
+    "question": "Voinko irtisanoa liikennevakuutuksen, jos autoni varastetaan?",
+    "expected_answer": "Kyllä, kirjallisesti, kun anastuksesta on tehty ilmoitus poliisille ja vakuutusyhtiölle, ajoneuvo on poistettu liikennekäytöstä ja tieto on merkitty ajoneuvorekisteriin.",
+    "expected_sections": ["10.1"],
+    "answerable": true,
+    "expected_part": "Liikennevakuutusehdot",
+    "verified": true,
+    "expected_sources": ["Autovakuutus IPID, s. 2"]
+  },
+  {
+    "id": "auto-12",
+    "product": "auto",
+    "question": "Korvataanko tuulilasin rikkoutuminen liikennevakuutuksesta?",
+    "expected_answer": "Ei. Liikennevakuutus ei kata omalle ajoneuvolle aiheutuneita vahinkoja. Tuulilasin rikkoutuminen korvataan vapaaehtoisen vakuutuksen lasiturvasta, jos se on otettu.",
+    "expected_sections": ["3.9"],
+    "answerable": true,
+    "expected_part": "Vapaaehtoisen vakuutuksen ehdot",
+    "verified": true,
+    "expected_sources": ["Autovakuutus IPID, s. 1"]
+  },
+  {
+    "id": "auto-u01",
+    "product": "auto",
+    "question": "Paljonko ajoneuvovakuutus maksaa vuodessa uudelle henkilöautolle?",
+    "expected_answer": "Vakuutusehdoissa ei kerrota vakuutuksen hintaa.",
+    "expected_sections": [],
+    "answerable": false,
+    "verified": true
+  },
+  {
+    "id": "auto-u02",
+    "product": "auto",
+    "question": "Voiko vakuutusmaksun maksaa MobilePaylla?",
+    "expected_answer": "Vakuutusehdoissa ei mainita MobilePayta.",
+    "expected_sections": [],
+    "answerable": false,
+    "verified": true
+  },
+  {
+    "id": "auto-u03",
+    "product": "auto",
+    "question": "Kuinka kauan tuulilasin vaihto kumppanikorjaamolla keskimäärin kestää?",
+    "expected_answer": "Vakuutusehdoissa ei kerrota lasinvaihdon kestoa.",
+    "expected_sections": [],
+    "answerable": false,
+    "verified": true
+  }
+]

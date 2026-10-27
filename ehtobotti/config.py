@@ -15,6 +15,8 @@ DEFAULT_CONFIG_PATH = PROJECT_ROOT / "config.yaml"
 @dataclass(frozen=True)
 class ChatModelOptions:
     think_supported: bool = False
+    # Let the model reason before answering. More accurate on tricky questions, but slower.
+    think: bool = False
 
 
 @dataclass(frozen=True)
@@ -37,6 +39,7 @@ class Settings:
     chat_models: dict[str, ChatModelOptions]
     num_ctx: int
     temperature: float
+    seed: int | None
     chunking: ChunkingSettings
     top_k: int
     embed_batch_size: int
@@ -44,7 +47,15 @@ class Settings:
     index_dir: Path
     sources_path: Path
     collection: str
+    questions_path: Path
+    results_dir: Path
+    judge_model: str
+    judge_fallback: str
     products: dict[str, str] = field(default_factory=dict)
+
+    def judge_for(self, answering_model: str) -> str:
+        """Judge model for an eval run; never the model that produced the answers."""
+        return self.judge_fallback if answering_model == self.judge_model else self.judge_model
 
     def chat_options(self, model: str) -> ChatModelOptions:
         """Options for a chat model; unknown models get safe defaults (no think flag)."""
@@ -75,6 +86,7 @@ def load_settings(path: Path | None = None) -> Settings:
         },
         num_ctx=raw.get("generation", {}).get("num_ctx", 4096),
         temperature=raw.get("generation", {}).get("temperature", 0.1),
+        seed=raw.get("generation", {}).get("seed"),
         chunking=ChunkingSettings(**raw.get("chunking", {})),
         top_k=raw.get("retrieval", {}).get("top_k", 5),
         embed_batch_size=raw.get("embedding", {}).get("batch_size", 32),
@@ -82,5 +94,9 @@ def load_settings(path: Path | None = None) -> Settings:
         index_dir=_resolve(paths.get("index_dir", "data/index")),
         sources_path=_resolve(paths.get("sources", "data/sources.yaml")),
         collection=raw.get("index", {}).get("collection", "vakuutusehdot"),
+        questions_path=_resolve(paths.get("questions", "eval/questions.json")),
+        results_dir=_resolve(paths.get("results_dir", "results")),
+        judge_model=raw["eval"]["judge_model"],
+        judge_fallback=raw["eval"]["judge_fallback"],
         products=raw.get("products", {}),
     )

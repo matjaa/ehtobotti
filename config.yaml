@@ -8,19 +8,25 @@ ollama:
 models:
   default_chat: qwen3.5:4b
   embedding: bge-m3
-  # Per-model options. think_supported controls whether think=False is passed
-  # (Qwen supports thinking, Gemma does not and errors if the flag is sent).
+  # Per-model options. think_supported: the model accepts the think flag (Qwen does,
+  # Gemma errors if it is sent). think: let the model reason before answering;
+  # usually more accurate on tricky questions but several times slower.
   chat:
     qwen3.5:4b:
       think_supported: true
+      think: false
     gemma3:4b:
       think_supported: false
     qwen3:8b:
       think_supported: true
+      think: false
 
 generation:
   num_ctx: 4096
   temperature: 0.1
+  # Fixed seed makes eval runs reproducible, so a change in results comes from a
+  # change in code or prompt, not from sampling luck.
+  seed: 42
 
 chunking:
   max_tokens: 400
@@ -36,10 +42,18 @@ retrieval:
 embedding:
   batch_size: 32
 
+eval:
+  # Must differ from the answering model so a model does not grade its own answers.
+  judge_model: gemma3:4b
+  # Used when the answering model is the same as judge_model.
+  judge_fallback: qwen3.5:4b
+
 paths:
   raw_dir: data/raw
   index_dir: data/index
   sources: data/sources.yaml
+  questions: eval/questions.json
+  results_dir: results
 
 index:
   collection: vakuutusehdot

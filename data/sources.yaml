@@ -7,5 +7,21 @@
 #   title: Kotivakuutusehdot
 #   version: "1.1.2026"
 #   url: https://example.com/kotivakuutusehdot.pdf
+#   label: Kotivakuutus        # optional: name used in citations, default is the product name
+#
+# Give each document of the same product its own label, otherwise citations
+# like [Autovakuutus, s. 2] cannot tell the documents apart.
 
-[]
+- product: auto
+  file: Ajoneuvovakuutusehto 2026.pdf
+  title: Ajoneuvovakuutuksen vakuutusehdot
+  version: "1.1.2026"
+  url: ""  # TODO: public URL of the PDF
+  label: Autovakuutus
+
+- product: auto
+  file: Ajoneuvovakuutus_ipid.pdf
+  title: Ajoneuvovakuutus, vakuutusta koskevat tiedot sisältävä asiakirja (IPID)
+  version: ""
+  url: ""  # TODO: public URL of the PDF
+  label: Autovakuutus IPID
