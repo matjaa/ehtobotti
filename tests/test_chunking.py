@@ -127,3 +127,12 @@ def test_single_oversized_paragraph_is_split_on_sentences():
 
 def test_empty_document_gives_no_chunks():
     assert _chunk([PageText(page=1, text="")]) == []
+
+
+def test_heading_without_text_becomes_prefix_of_its_subsections():
+    pages = [PageText(1, "3 Voimassaolo\n3.2 Vakuutuksen voimassaolo\n3.2.1 Vakuutuspaikassa\n"
+                         "Vakuutus on voimassa vakuutuspaikassa.\n3.3 Vakuutetut\nVakuutettuna on ottaja.\n")]
+    chunks = _chunk(pages)
+    assert [c.section for c in chunks] == ["3.2.1", "3.3"]  # no chunk for the empty 3 and 3.2
+    assert chunks[0].text.startswith("3 Voimassaolo\n3.2 Vakuutuksen voimassaolo\n3.2.1 Vakuutuspaikassa\n")
+    assert chunks[1].text.startswith("3 Voimassaolo\n3.3 Vakuutetut\n")  # 3.2 is closed by 3.3

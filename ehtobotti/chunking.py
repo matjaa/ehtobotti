@@ -45,6 +45,7 @@ class Chunk:
     chunk_id: str
     part: str = ""
     label: str = ""  # citation name for the document (sources.yaml), empty = product name
+    company: str = ""  # insurer; terms of different companies must never be mixed in one answer
 
     def metadata(self) -> dict[str, str | int]:
         return {
@@ -57,6 +58,7 @@ class Chunk:
             "chunk_id": self.chunk_id,
             "part": self.part,
             "label": self.label,
+            "company": self.company,
         }
 
 
@@ -79,6 +81,8 @@ class _Section:
     page: int
     part: str = ""
     lines: list[_Line] = field(default_factory=list)
+    # Headings of the enclosing sections ("3.2 Vakuutuksen voimassaolo" for 3.2.1).
+    parents: list[str] = field(default_factory=list)
 
     @property
     def heading(self) -> str:
@@ -92,6 +96,7 @@ class _Section:
         "Liikennevakuutusehdot / 3 Vakuutuksen sisältö" from the voluntary insurance terms.
         """
         lines = [self.part] if self.part and self.part != self.title else []
+        lines.extend(self.parents)
         if self.heading:
             lines.append(self.heading)
         return "\n".join(lines)
@@ -279,10 +284,25 @@ def chunk_document(
     max_chars: int,
     max_heading_chars: int = 90,
     label: str = "",
+    company: str = "",
 ) -> list[Chunk]:
     """Turn a document's pages into chunks with citation metadata."""
     chunks: list[Chunk] = []
+    open_sections: list[_Section] = []
     for section in split_sections(pages, max_heading_chars):
+        if section.number:
+            # Keep only the enclosing sections: "3.2" stays open for "3.2.1", not for "3.3".
+            open_sections = [
+                s for s in open_sections
+                if s.part == section.part and section.number.startswith(s.number + ".")
+            ]
+            section.parents = [s.heading for s in open_sections]
+            open_sections.append(section)
+        # A heading with no text of its own ("3.2 Vakuutuksen voimassaolo" followed directly
+        # by 3.2.1) would be a chunk without content; its heading lives on in the
+        # subsections' prefix instead.
+        if not any(line.text.strip() for line in section.lines):
+            continue
         for body, page in _section_parts(section, max_chars):
             text = f"{section.prefix}\n{body}".strip() if section.prefix else body.strip()
             if not text:
@@ -299,6 +319,7 @@ def chunk_document(
                     chunk_id=f"{doc_id}:{len(chunks):04d}",
                     part=section.part,
                     label=label,
+                    company=company,
                 )
             )
     return chunks

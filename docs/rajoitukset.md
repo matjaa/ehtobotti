@@ -1,11 +1,17 @@
 # Tunnetut rajoitukset
 
-Kerätään tähän rajoitukset, jotka kerrotaan README:ssä (vaihe 6) ja tarvittaessa käyttöliittymässä.
+Rajoitukset, jotka botin käyttäjän ja arvioijan on hyvä tietää. Tiivistelmä on README:ssä.
 
 ## Aineisto
 
-- Mukana on toistaiseksi vain autovakuutus: vakuutusehdot (1.1.2026) ja vakuutusta koskevat
-  tiedot sisältävä asiakirja (IPID). Koti-, matka- ja henkilövakuutus puuttuvat.
+- Aineistona on LähiTapiolan julkisia asiakirjoja: ajoneuvovakuutuksen vakuutusehdot (1.1.2026)
+  ja IPID-asiakirja sekä kotivakuutuksen vakuutusehdot ja IPID-asiakirja. Matka- ja
+  henkilövakuutus puuttuvat. Arviointikysymykset koskevat toistaiseksi vain autovakuutusta.
+- Pilkonta tunnistaa numeroidut väliotsikot lihavoinnin tai fonttikoon perusteella. Se on tehty
+  ja testattu LähiTapiolan asiakirjoilla. Muiden yhtiöiden PDF:t toimivat, mutta jos otsikoita
+  ei tunnisteta, teksti pilkotaan kappaleittain ja lähdeviitteessä on vain sivunumero.
+- Lähde-PDF:ssä voi olla virheitä, jotka näkyvät viitteissä sellaisenaan. Esimerkiksi
+  autovakuutusehtojen sivulla 15 kohta 3.23.2 on numeroitu "3.2.2".
 - **Suppea ja laaja vakuutus:** IPID-asiakirjan tekstissä luetellaan kaikki vakuutusturvat,
   mutta siitä ei käy ilmi, mitkä turvat kuuluvat suppeaan ja mitkä laajaan vakuutukseen.
   Botti ei siksi osaa kertoa tasojen eroja. Tieto löytyy yleensä vakuutusyhtiön tuotesivulta
@@ -18,7 +24,8 @@ Kerätään tähän rajoitukset, jotka kerrotaan README:ssä (vaihe 6) ja tarvit
 - Pieni kielimalli (qwen3.5:4b) ei aina erota, kumpaa vakuutusta ote koskee. Kysymykseen
   "Korvataanko tuulilasin rikkoutuminen liikennevakuutuksesta?" se vastaa "Kyllä" ja viittaa
   vapaaehtoisen vakuutuksen lasiturvaan, vaikka oikea vastaus on "Ei" (kysymys auto-12).
-  Sama virhe toistui myös suuremmalla mallilla (qwen3:8b).
+  Sama virhe toistui myös suuremmalla mallilla (qwen3:8b). Kun jokaisen palan alkuun lisättiin
+  myös yläotsikot, vastaus oli oikein, mutta tämä perustuu yhteen ajoon.
 - Suurempi malli qwen3:8b vastasi muuten hieman paremmin, mutta keksi vastauksen
   kysymykseen, johon ehdoissa ei ole vastausta, ja oli noin neljä kertaa hitaampi.
   Oletusmalliksi on siksi valittu qwen3.5:4b.

@@ -8,5 +8,7 @@ ollama>=0.4
 typer>=0.12
 # config.yaml and data/sources.yaml
 pyyaml>=6.0
+# Chat UI (python -m ehtobotti ui); simplest way to a usable web UI without frontend code
+gradio>=6,<7
 # Unit tests
 pytest>=8.0

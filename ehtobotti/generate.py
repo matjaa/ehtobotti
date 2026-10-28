@@ -30,8 +30,8 @@ Vastaa JSON-muodossa:
 Ohjeet:
 1. Älä arvaa äläkä käytä muuta tietoa. Jos otteista ei löydy vastausta, aseta "vastattavissa": false. Älä kirjoita vastaukseen, että otteet eivät kerro jotain.
 2. Vastaa siihen, mitä kysytään, samassa muodossa kuin esimerkeissä.
-3. Otteen ensimmäisellä rivillä lukee, mitä vakuutusta se koskee, esimerkiksi "Liikennevakuutusehdot" tai "Vapaaehtoisen vakuutuksen ehdot". Käytä vain otteita, jotka koskevat kysyttyä vakuutusta.
-4. Merkitse lähde jokaisen väitteen perään hakasulkeissa täsmälleen kuten otteen otsikossa.
+3. Otteen ensimmäisellä rivillä on sen lähdeviite hakasulkeissa. Sen jälkeen lukee, mitä vakuutusta ote koskee, esimerkiksi "Liikennevakuutusehdot" tai "Vapaaehtoisen vakuutuksen ehdot". Käytä vain otteita, jotka koskevat kysyttyä vakuutusta.
+4. Merkitse lähde jokaisen väitteen perään kopioimalla otteen ensimmäisen rivin lähdeviite sellaisenaan.
 
 Esimerkkejä:
 
@@ -134,6 +134,31 @@ def find_unsupported(citations: list[Citation], chunks: list[RetrievedChunk], se
     return [c for c in citations if not supported(c)]
 
 
+def repair_citations(text: str, chunks: list[RetrievedChunk], settings: Settings) -> str:
+    """Fix citations that name the document part instead of the source label.
+
+    Small models sometimes copy the part heading from the excerpt text
+    ("[Vapaaehtoisen vakuutuksen ehdot, kohta 3.2, s. 3]") instead of the label line.
+    When section and page still point at an excerpt of that part, the name is swapped
+    for the excerpt's label.
+    """
+    def fix(match: re.Match) -> str:
+        name = match["product"].strip()
+        candidates = [c for c in chunks if c.metadata.get("part") == name and name != source_name(c, settings)]
+        if not candidates:
+            return match.group(0)
+        # Keep the model's section and page; only the name changes. The usual
+        # supported-citation check then decides whether they match an excerpt.
+        renamed = match.group(0).replace(match["product"], source_name(candidates[0], settings), 1)
+        citation = extract_citations(renamed)[0]
+        for chunk in candidates:
+            if not find_unsupported([citation], [chunk], settings):
+                return renamed
+        return match.group(0)
+
+    return _CITATION_RE.sub(fix, text)
+
+
 def is_refusal(text: str) -> bool:
     return REFUSAL_TEXT.rstrip(".").lower() in text.lower()
 
@@ -165,12 +190,13 @@ def answer_question(
     client: LLMClient,
     settings: Settings,
     product: str | None = None,
+    company: str | None = None,
     model: str | None = None,
     top_k: int | None = None,
 ) -> Answer:
     model = model or settings.default_chat_model
     start = time.perf_counter()
-    chunks = retriever.search(question, top_k=top_k, product=product)
+    chunks = retriever.search(question, top_k=top_k, product=product, company=company)
 
     if not chunks:
         # Nothing to ground an answer on: refuse without calling the model.
@@ -194,6 +220,7 @@ def answer_question(
             structured=structured,
         )
 
+    text = repair_citations(text, chunks, settings)
     citations = extract_citations(text)
     return Answer(
         text=f"{text}\n\n{DISCLAIMER}",

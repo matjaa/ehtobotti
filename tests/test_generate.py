@@ -58,8 +58,8 @@ class FakeRetriever:
         self.chunks = chunks
         self.calls = []
 
-    def search(self, query, *, top_k=None, product=None):
-        self.calls.append({"query": query, "top_k": top_k, "product": product})
+    def search(self, query, *, top_k=None, product=None, company=None):
+        self.calls.append({"query": query, "top_k": top_k, "product": product, "company": company})
         return self.chunks
 
 
@@ -209,3 +209,34 @@ def test_quoted_sub_subsection_is_not_flagged_as_made_up():
     client = FakeClient(reply(True, "20 % [Kotivakuutus, kohta 4.6.4.1, s. 20]. Väärä [Kotivakuutus, kohta 4.6.5, s. 20]."))
     answer = answer_question("Q?", retriever=FakeRetriever([omavastuu]), client=client, settings=SETTINGS)
     assert [c.section for c in answer.unsupported_citations] == ["4.6.5"]
+
+
+def test_citation_naming_the_document_part_is_repaired():
+    part_chunk = RetrievedChunk(
+        text="Vapaaehtoisen vakuutuksen ehdot\n3.2 Eläintörmäys\nVäistämistä ei korvata.",
+        metadata={"product": "auto", "section": "3.2", "section_title": "Eläintörmäys", "page": 3,
+                  "part": "Vapaaehtoisen vakuutuksen ehdot", "label": "Autovakuutus"},
+        score=0.8,
+    )
+    client = FakeClient(reply(True, "Ei korvata [Vapaaehtoisen vakuutuksen ehdot, kohta 3.2, s. 3]."))
+    answer = answer_question("Väistö?", retriever=FakeRetriever([part_chunk]), client=client, settings=SETTINGS)
+    assert "[Autovakuutus, kohta 3.2, s. 3]" in answer.text
+    assert answer.unsupported_citations == []
+
+    # A part name with a section that was not retrieved is left alone and stays flagged.
+    client = FakeClient(reply(True, "Korvataan [Vapaaehtoisen vakuutuksen ehdot, kohta 9.9, s. 3]."))
+    answer = answer_question("X?", retriever=FakeRetriever([part_chunk]), client=client, settings=SETTINGS)
+    assert len(answer.unsupported_citations) == 1
+
+
+def test_repaired_citation_keeps_subsection():
+    part_chunk = RetrievedChunk(
+        text="Vapaaehtoisen vakuutuksen ehdot\n4.6.4 Omavastuut\n4.6.4.1 Varkaus\n20 %.",
+        metadata={"product": "auto", "section": "4.6.4", "section_title": "Omavastuut", "page": 20,
+                  "part": "Vapaaehtoisen vakuutuksen ehdot", "label": "Autovakuutus"},
+        score=0.8,
+    )
+    client = FakeClient(reply(True, "20 % [Vapaaehtoisen vakuutuksen ehdot, kohta 4.6.4.1, s. 20]."))
+    answer = answer_question("Omavastuu?", retriever=FakeRetriever([part_chunk]), client=client, settings=SETTINGS)
+    assert "[Autovakuutus, kohta 4.6.4.1, s. 20]" in answer.text
+    assert answer.unsupported_citations == []

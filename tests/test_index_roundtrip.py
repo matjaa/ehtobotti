@@ -70,3 +70,18 @@ def test_reingest_replaces_old_chunks(settings):
     results = VectorRetriever(settings, fake_embed).search("teksti", top_k=10)
     assert [c.section for c in results] == ["4.2"]
     assert "uusi" in results[0].text
+
+
+def test_get_section_returns_all_chunks_of_a_section(settings):
+    chunks = _chunks("koti", [PageText(1, "4.2 Vuotovahingot\nputki\n\n4.3 Murtovahingot\nmurto\n")], "koti-a")
+    write_index(settings, chunks, fake_embed)
+    found = VectorRetriever(settings, fake_embed).get_section("4.3", 1)
+    assert [c.section for c in found] == ["4.3"]
+    assert "murto" in found[0].text
+
+
+def test_has_product(settings):
+    write_index(settings, _chunks("koti", [PageText(1, "4.2 Vuotovahingot\nputki\n")], "koti-a"), fake_embed)
+    retriever = VectorRetriever(settings, fake_embed)
+    assert retriever.has_product("koti")
+    assert not retriever.has_product("auto")

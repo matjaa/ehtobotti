@@ -49,6 +49,7 @@ def ingest(
 def ask(
     question: str = typer.Argument(..., help="Kysymys vakuutusehdoista."),
     product: Optional[str] = typer.Option(None, help="Rajaa haku yhteen tuotteeseen (koti, auto, matka, henkilo)."),
+    company: Optional[str] = typer.Option(None, help="Rajaa haku yhden vakuutusyhtiön ehtoihin."),
     model: Optional[str] = typer.Option(None, help="Kielimalli; oletus config.yaml-tiedostosta."),
     top_k: Optional[int] = typer.Option(None, "--top-k", help="Haettavien otteiden määrä."),
     show_chunks: bool = typer.Option(False, "--show-chunks", help="Näytä haettujen otteiden teksti."),
@@ -74,7 +75,7 @@ def ask(
     try:
         answer = answer_question(
             question, retriever=retriever, client=client, settings=settings,
-            product=product, model=model, top_k=top_k,
+            product=product, company=company, model=model, top_k=top_k,
         )
     except ConnectionError:
         typer.echo(f"Ollamaan ei saatu yhteyttä osoitteessa {settings.ollama_host}. Onko `ollama serve` käynnissä?")
@@ -157,7 +158,20 @@ def eval_command(
 
 
 @app.command()
-def ui() -> None:
-    """Käynnistä Gradio-käyttöliittymä (tulossa vaiheessa 4)."""
-    typer.echo("Ei vielä toteutettu (vaihe 4).")
-    raise typer.Exit(code=1)
+def ui(
+    port: int = typer.Option(7860, help="Portti, jossa käyttöliittymä avautuu."),
+    share: bool = typer.Option(False, "--share", help="Luo julkinen Gradio-linkki (oletuksena vain tämä kone)."),
+) -> None:
+    """Käynnistä Gradio-käyttöliittymä selaimeen."""
+    try:
+        from ehtobotti.ui import build_app
+        # Uploading writes files onto this machine, so it is off for a public link.
+        app_ = build_app(load_settings(), allow_upload=not share)
+    except ImportError:
+        typer.echo("Gradio puuttuu. Asenna se: pip install -r requirements.txt")
+        raise typer.Exit(code=1)
+    typer.echo(f"Avaa selaimessa http://localhost:{port}")
+    # Local only by default: questions stay on this machine.
+    if share:
+        typer.echo("Julkisessa linkissä tiedostojen lisääminen on pois päältä.")
+    app_.launch(server_name="127.0.0.1", server_port=port, share=share, max_file_size="50mb")

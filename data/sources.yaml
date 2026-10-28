@@ -1,5 +1,6 @@
 # Public source documents. PDFs are downloaded manually into data/raw/<product>/
-# and are not committed. One entry per PDF; `file` is the filename inside that folder.
+# and are not committed. One entry per PDF; `file` is the path inside that folder
+# (uploads from the UI go to a company subfolder, e.g. lahitapiola/ehdot.pdf).
 #
 # Example:
 # - product: koti
@@ -8,6 +9,7 @@
 #   version: "1.1.2026"
 #   url: https://example.com/kotivakuutusehdot.pdf
 #   label: Kotivakuutus        # optional: name used in citations, default is the product name
+#   company: Esimerkkiyhtiö     # insurer; the UI asks for company so terms of two insurers never mix
 #
 # Give each document of the same product its own label, otherwise citations
 # like [Autovakuutus, s. 2] cannot tell the documents apart.
@@ -18,6 +20,7 @@
   version: "1.1.2026"
   url: ""  # TODO: public URL of the PDF
   label: Autovakuutus
+  company: LähiTapiola
 
 - product: auto
   file: Ajoneuvovakuutus_ipid.pdf
@@ -25,3 +28,52 @@
   version: ""
   url: ""  # TODO: public URL of the PDF
   label: Autovakuutus IPID
+  company: LähiTapiola
+
+- product: koti
+  file: Kotivakuutusehto 2026.pdf
+  title: Kotivakuutusehto 2026
+  version: ''
+  url: ''
+  label: Kotivakuutus
+  company: LähiTapiola
+
+- product: koti
+  file: KotivakuutusT_ipid.pdf
+  title: KotivakuutusT_ipid
+  version: ''
+  url: ''
+  label: Kotivakuutus (KotivakuutusT_ipid)
+  company: LähiTapiola
+
+- product: auto
+  file: if/kaskovakuutusehdot.pdf
+  title: kaskovakuutusehdot
+  version: ''
+  url: ''
+  label: If Autovakuutus
+  company: If
+
+- product: auto
+  file: if/liikennevakuutusehdot.pdf
+  title: liikennevakuutusehdot
+  version: ''
+  url: ''
+  label: If Autovakuutus (liikennevakuutusehdot)
+  company: If
+
+- product: auto
+  file: if/kaskovakuutustiedot.pdf
+  title: kaskovakuutustiedot
+  version: ''
+  url: ''
+  label: If Autovakuutus (kaskovakuutustiedot)
+  company: If
+
+- product: auto
+  file: if/liikennevakuutustiedot.pdf
+  title: liikennevakuutustiedot
+  version: ''
+  url: ''
+  label: If Autovakuutus (liikennevakuutustiedot)
+  company: If

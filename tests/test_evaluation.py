@@ -160,3 +160,11 @@ def test_expected_sources_count_for_retrieval_and_citations():
                          model="m", judge_model=None, log=lambda _: None)
     assert r.citation_hit is True
     assert r.citation_precision == 2 / 3
+
+
+def test_run_limits_retrieval_to_the_questions_company():
+    retriever = FakeRetriever([chunk("3.9")])
+    client = ScriptedClient(reply(True, "Korvataan [Autovakuutus, kohta 3.9, s. 5]."), "OIKEIN")
+    evaluation.run([question(company="LähiTapiola")], retriever=retriever, client=client, settings=SETTINGS,
+                   model="test-model", judge_model=None)
+    assert retriever.calls[-1]["company"] == "LähiTapiola"

@@ -54,6 +54,9 @@ class Question:
     # (e.g. "Autovakuutus IPID, s. 1") or just "<citation label>" for any page.
     # A retrieved chunk or citation matching any expected section OR source counts.
     expected_sources: list[str] = field(default_factory=list)
+    # The insurer whose terms the expected answer comes from. Retrieval is limited to it,
+    # so another company's documents of the same product cannot change the results.
+    company: str = ""
 
     @property
     def has_expected(self) -> bool:
@@ -157,7 +160,7 @@ def run(
     for i, q in enumerate(questions, start=1):
         log(f"[{i}/{len(questions)}] {q.id}")
         answer = answer_question(q.question, retriever=retriever, client=client, settings=settings,
-                                 product=q.product or None, model=model)
+                                 product=q.product or None, company=q.company or None, model=model)
         result = Result(question=q, answer=answer, hit=score_retrieval(q, answer, settings))
         result.citation_precision, result.citation_hit = score_citations(q, answer)
         results.append(result)
